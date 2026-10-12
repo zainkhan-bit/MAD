@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'animated_container_widget.dart';
+import 'animated_cross_fade_widget.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -346,10 +349,52 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(height: 12),
                     Text(
                       'I am a passionate Software Engineering student at Riphah International University (5th Semester). '
-                          'I specialize in Mobile App Development using Flutter, Database Management Systems, Programming Fundamentals (PF), and Website Development. '
-                          'I enjoy creating clean, efficient, and user-friendly applications that deliver great user experiences.',
+                      'I specialize in Mobile App Development using Flutter, Database Management Systems, Programming Fundamentals (PF), and Website Development. '
+                      'I enjoy creating clean, efficient, and user-friendly applications that deliver great user experiences.',
                       style: TextStyle(fontSize: 14, color: Colors.black87, height: 1.5),
                     ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1, thickness: 1, color: Color(0xFFE5D0C5)),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Interactive Animations',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      '1. Animated Container (Tap + to resize):',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    Center(
+                      child: AnimatedContainerWidget(),
+                    ),
+                    SizedBox(height: 24),
+                    Text(
+                      '2. Animated Cross Fade (Toggle view):',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    AnimatedCrossFadeWidget(),
                   ],
                 ),
               ),
