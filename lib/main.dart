@@ -4,6 +4,8 @@ import 'animated_container_widget.dart';
 import 'animated_cross_fade_widget.dart';
 import 'animated_opacity_widget.dart';
 import 'app_theme.dart';
+import 'contact_widget.dart';
+import 'mobile_frame.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +23,12 @@ class Student {
   final String aboutFull;
   final String? avatarPath;
 
+  // Week 11: Contact tab details
+  final String phone;
+  final String linkedin;
+  final String github;
+  final String location;
+
   const Student({
     required this.name,
     required this.role,
@@ -32,6 +40,10 @@ class Student {
     required this.aboutSummary,
     required this.aboutFull,
     this.avatarPath,
+    this.phone = '',
+    this.linkedin = '',
+    this.github = '',
+    this.location = '',
   });
 
   /// SAP ID = email ka pehla hissa (66157@students... -> 66157)
@@ -55,9 +67,13 @@ final List<Student> mockStudents = [
     aboutFull:
         'I am a passionate Software Engineering student at Riphah International University (5th Semester). I specialize in Mobile App Development using Flutter, Database Management Systems, Programming Fundamentals (PF), and Website Development. I enjoy creating clean, efficient, and user-friendly applications that deliver great user experiences.',
     avatarPath: 'assets/profile.jpg',
+    phone: '+92 300 0000000',
+    linkedin: 'linkedin.com/in/muhammad-zain-khan-251b58337',
+    github: 'github.com/your-username',
+    location: 'Islamabad, Pakistan',
   ),
   const Student(
-    name: 'Student 64860',
+    name: 'Sameer Abdullah',
     role: 'Software Engineer',
     email: '64860@students.riphah.edu.pk',
     password: '123456',
@@ -69,6 +85,10 @@ final List<Student> mockStudents = [
     aboutFull:
         'I am a dedicated Software Engineering student at Riphah International University (5th Semester). I specialize in Mobile App Development using Flutter, UI/UX Design, Cross-Platform Architecture, and Cloud Systems. I enjoy working on innovative software solutions.',
     avatarPath: 'assets/student2.jpg',
+    phone: '+92 300 1111111',
+    linkedin: 'linkedin.com/in/sameer-abdullah-0807bb37b',
+    github: 'github.com/student-64860',
+    location: 'Islamabad, Pakistan',
   ),
 ];
 
@@ -108,6 +128,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      // Chrome / desktop par phone frame mein preview
+      builder: (context, child) => MobileFrame(child: child ?? const SizedBox()),
       home: const LoginPage(),
     );
   }
@@ -230,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             // Curved gradient header behind the card
             Container(
-              height: 320,
+              height: 290,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -243,13 +265,13 @@ class _LoginPageState extends State<LoginPage> {
             SafeArea(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 440),
                     child: Column(
                       children: [
                         const _PortalBadge(),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 14),
                         const Text(
                           'Riphah Student Portal',
                           textAlign: TextAlign.center,
@@ -269,9 +291,9 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white.withAlpha(210),
                           ),
                         ),
-                        const SizedBox(height: 28),
+                        const SizedBox(height: 22),
                         AppCard(
-                          padding: const EdgeInsets.fromLTRB(22, 26, 22, 22),
+                          padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
                           child: Form(
                             key: _formKey,
                             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -296,10 +318,11 @@ class _LoginPageState extends State<LoginPage> {
                                       color: AppColors.textSecondary,
                                     ),
                                   ),
-                                  const SizedBox(height: 24),
+                                  const SizedBox(height: 20),
                                   TextFormField(
                                     enabled: !_isLoading,
                                     keyboardType: TextInputType.emailAddress,
+                                    style: const TextStyle(fontSize: 14.5),
                                     textInputAction: TextInputAction.next,
                                     autofillHints: const [AutofillHints.email],
                                     decoration: appInputDecoration(
@@ -316,6 +339,7 @@ class _LoginPageState extends State<LoginPage> {
                                     enabled: !_isLoading,
                                     focusNode: _passwordFocus,
                                     obscureText: _obscurePassword,
+                                    style: const TextStyle(fontSize: 14.5),
                                     textInputAction: TextInputAction.done,
                                     autofillHints: const [AutofillHints.password],
                                     decoration: appInputDecoration(
@@ -338,9 +362,9 @@ class _LoginPageState extends State<LoginPage> {
                                     onSaved: (value) => _login.password = value ?? '',
                                     onFieldSubmitted: (_) => _handleLogin(),
                                   ),
-                                  const SizedBox(height: 28),
+                                  const SizedBox(height: 22),
                                   SizedBox(
-                                    height: 54,
+                                    height: 52,
                                     child: FilledButton(
                                       onPressed: _isLoading ? null : _handleLogin,
                                       style: FilledButton.styleFrom(
@@ -421,8 +445,8 @@ class _PortalBadge extends StatelessWidget {
     return Semantics(
       label: 'University portal logo',
       child: Container(
-        width: 96,
-        height: 96,
+        width: 84,
+        height: 84,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
@@ -436,7 +460,7 @@ class _PortalBadge extends StatelessWidget {
         ),
         child: const Icon(
           Icons.account_balance_rounded,
-          size: 48,
+          size: 42,
           color: AppColors.primary,
         ),
       ),
@@ -447,7 +471,7 @@ class _PortalBadge extends StatelessWidget {
 // =====================================================================
 // PROFILE PAGE
 // =====================================================================
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   final Student student;
 
   const ProfilePage({
@@ -455,8 +479,22 @@ class ProfilePage extends StatelessWidget {
     required this.student,
   });
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  // Week 11: Bottom Navigation -> 0 = Personal, 1 = About, 2 = Contact
+  int _currentIndex = 0;
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   // Confirm before logout (HCI: error prevention)
-  Future<void> _confirmLogout(BuildContext context) async {
+  Future<void> _confirmLogout() async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -477,7 +515,7 @@ class ProfilePage extends StatelessWidget {
       ),
     );
 
-    if (confirmed == true && context.mounted) {
+    if (confirmed == true && mounted) {
       Navigator.pushReplacement(
         context,
         createFadePageRoute(const LoginPage()),
@@ -485,8 +523,38 @@ class ProfilePage extends StatelessWidget {
     }
   }
 
+  // Selected tab ka content
+  Widget _buildTab(Student s) {
+    switch (_currentIndex) {
+      case 0:
+        // AnimatedOpacity (Hide / Show)
+        return AnimatedOpacityWidget(
+          email: s.email,
+          university: s.university,
+          program: s.program,
+          semester: s.semester,
+        );
+      case 1:
+        // AnimatedCrossFade (Read more / Show less)
+        return AnimatedCrossFadeWidget(
+          summary: s.aboutSummary,
+          full: s.aboutFull,
+        );
+      default:
+        return ContactWidget(
+          email: s.email,
+          phone: s.phone,
+          linkedin: s.linkedin,
+          github: s.github,
+          location: s.location,
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final student = widget.student;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.peach,
@@ -494,55 +562,102 @@ class ProfilePage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: false,
+        toolbarHeight: 48,
         title: const Text(
           'My Profile',
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: 16,
           ),
         ),
         actions: [
           IconButton(
             tooltip: 'Log out',
             icon: const Icon(Icons.logout_rounded, color: AppColors.textPrimary),
-            onPressed: () => _confirmLogout(context),
+            onPressed: _confirmLogout,
           ),
           const SizedBox(width: 4),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 28),
-        child: Column(
-          children: [
-            // 1. Header with AnimatedContainer (tap photo to enlarge)
-            AnimatedContainerWidget(
-              name: student.name,
-              role: student.role,
-              avatarPath: student.avatarPath,
-              sapId: student.sapId,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-              child: Column(
-                children: [
-                  // 2. Personal info with AnimatedOpacity (hide / show)
-                  AnimatedOpacityWidget(
-                    sapId: student.sapId,
-                    email: student.email,
-                    university: student.university,
-                    program: student.program,
-                    semester: student.semester,
+      body: Column(
+        children: [
+          // Header stays on every tab (AnimatedContainer: tap photo to enlarge)
+          AnimatedContainerWidget(
+            name: student.name,
+            role: student.role,
+            avatarPath: student.avatarPath,
+            sapId: student.sapId,
+          ),
+          // Tab content with a smooth fade + slide when switching
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              switchInCurve: Curves.easeOut,
+              switchOutCurve: Curves.easeIn,
+              transitionBuilder: (child, animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 0.04),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
                   ),
-                  const SizedBox(height: 16),
-
-                  // 3. About Me with AnimatedCrossFade (read more / less)
-                  AnimatedCrossFadeWidget(
-                    summary: student.aboutSummary,
-                    full: student.aboutFull,
-                  ),
-                ],
+                );
+              },
+              child: SingleChildScrollView(
+                key: ValueKey<int>(_currentIndex),
+                padding: const EdgeInsets.fromLTRB(14, 14, 14, 16),
+                child: _buildTab(student),
               ),
+            ),
+          ),
+        ],
+      ),
+      // ===== WEEK 11: BOTTOM NAVIGATION BAR =====
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          border: Border(top: BorderSide(color: AppColors.border)),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x12B4582A),
+              blurRadius: 12,
+              offset: Offset(0, -4),
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: _onTabTapped,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          selectedItemColor: AppColors.primary,
+          unselectedItemColor: AppColors.textSecondary,
+          selectedFontSize: 12,
+          unselectedFontSize: 11.5,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline_rounded),
+              activeIcon: Icon(Icons.person_rounded),
+              label: 'Personal',
+              tooltip: 'Personal Information',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.auto_stories_outlined),
+              activeIcon: Icon(Icons.auto_stories_rounded),
+              label: 'About',
+              tooltip: 'About Me',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.contact_phone_outlined),
+              activeIcon: Icon(Icons.contact_phone_rounded),
+              label: 'Contact',
+              tooltip: 'Contact Details',
             ),
           ],
         ),
