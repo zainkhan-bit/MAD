@@ -7,7 +7,7 @@ void main() {
     await tester.pumpWidget(const MyApp());
 
     // Verify that the login page elements exist.
-    expect(find.text('LOGIN'), findsOneWidget);
+    expect(find.text('Riphah Student Portal'), findsOneWidget);
     expect(find.text('Welcome Back'), findsOneWidget);
     expect(find.text('Login'), findsOneWidget);
   });
