@@ -6,15 +6,7 @@ class TabsDemoApp extends StatelessWidget {
   const TabsDemoApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: AppColors.background,
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-        ),
-        home: const TabsPage(),
-      );
+  Widget build(BuildContext context) => const TabsPage();
 }
 
 class TabsPage extends StatelessWidget {
@@ -28,6 +20,11 @@ class TabsPage extends StatelessWidget {
             title: const Text('Zain Khan Profile - Tabs'),
             backgroundColor: AppColors.peach,
             elevation: 0,
+            leading: IconButton(
+              tooltip: 'Back',
+              icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+              onPressed: () => Navigator.pop(context),
+            ),
             bottom: const TabBar(
               indicatorColor: AppColors.primary,
               labelColor: AppColors.primary,

@@ -32,6 +32,11 @@ class _AnimatedContainerWidgetDemoState
         title: const Text('Animated Container - Zain Khan'),
         backgroundColor: AppColors.peach,
         elevation: 0,
+        leading: IconButton(
+          tooltip: 'Back',
+          icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(

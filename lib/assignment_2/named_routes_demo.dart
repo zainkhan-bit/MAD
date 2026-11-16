@@ -6,26 +6,7 @@ class NamedRoutesApp extends StatelessWidget {
   const NamedRoutesApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: AppColors.background,
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const NamedHomePage(),
-          '/about': (context) => const SimplePage(
-                title: 'About Zain Khan',
-                content: 'Muhammad Zain Khan\nBS Software Engineering (5th Sem)\nRiphah International University',
-              ),
-          '/contact': (context) => const SimplePage(
-                title: 'Zain Khan Contact',
-                content: 'Email: 66157@students.riphah.edu.pk\nLocation: Islamabad, Pakistan',
-              ),
-        },
-      );
+  Widget build(BuildContext context) => const NamedHomePage();
 }
 
 class NamedHomePage extends StatelessWidget {
@@ -37,6 +18,11 @@ class NamedHomePage extends StatelessWidget {
           title: const Text('Named Routes Demo'),
           backgroundColor: AppColors.peach,
           elevation: 0,
+          leading: IconButton(
+            tooltip: 'Back',
+            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: Center(
           child: Padding(
@@ -68,9 +54,17 @@ class NamedHomePage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
-                    onPressed: () => Navigator.pushNamed(context, '/about'),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SimplePage(
+                          title: 'About Zain Khan',
+                          content: 'Muhammad Zain Khan\nBS Software Engineering (5th Sem)\nRiphah International University',
+                        ),
+                      ),
+                    ),
                     icon: const Icon(Icons.info_outline),
-                    label: const Text('Open About (/about)'),
+                    label: const Text('Open About Screen'),
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton.icon(
@@ -79,9 +73,17 @@ class NamedHomePage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
-                    onPressed: () => Navigator.pushNamed(context, '/contact'),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SimplePage(
+                          title: 'Zain Khan Contact',
+                          content: 'Email: 66157@students.riphah.edu.pk\nLocation: Islamabad, Pakistan',
+                        ),
+                      ),
+                    ),
                     icon: const Icon(Icons.contact_mail_outlined),
-                    label: const Text('Open Contact (/contact)'),
+                    label: const Text('Open Contact Screen'),
                   ),
                 ],
               ),
@@ -103,6 +105,11 @@ class SimplePage extends StatelessWidget {
           title: Text(title),
           backgroundColor: AppColors.peach,
           elevation: 0,
+          leading: IconButton(
+            tooltip: 'Back',
+            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: Center(
           child: Padding(
@@ -122,7 +129,7 @@ class SimplePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back_rounded),
                     label: const Text('Go Back'),
                   ),
                 ],

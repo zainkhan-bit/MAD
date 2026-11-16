@@ -6,15 +6,7 @@ class HeroAnimationApp extends StatelessWidget {
   const HeroAnimationApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: AppColors.background,
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-        ),
-        home: const HeroHomePage(),
-      );
+  Widget build(BuildContext context) => const HeroHomePage();
 }
 
 class HeroHomePage extends StatelessWidget {
@@ -26,6 +18,11 @@ class HeroHomePage extends StatelessWidget {
           title: const Text('Hero Animation - Zain Khan'),
           backgroundColor: AppColors.peach,
           elevation: 0,
+          leading: IconButton(
+            tooltip: 'Back',
+            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: Center(
           child: Padding(
@@ -84,6 +81,11 @@ class DetailPage extends StatelessWidget {
           title: const Text('Zain Khan Details'),
           backgroundColor: AppColors.peach,
           elevation: 0,
+          leading: IconButton(
+            tooltip: 'Back',
+            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: Center(
           child: Padding(
@@ -95,8 +97,8 @@ class DetailPage extends StatelessWidget {
                   Hero(
                     tag: 'zain-avatar',
                     child: Container(
-                      width: 200,
-                      height: 200,
+                      width: 180,
+                      height: 180,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: AppColors.primary, width: 3),
@@ -108,7 +110,7 @@ class DetailPage extends StatelessWidget {
                         child: Image.asset(
                           'assets/profile.jpg',
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, size: 160, color: AppColors.primary),
+                          errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, size: 140, color: AppColors.primary),
                         ),
                       ),
                     ),
@@ -122,6 +124,17 @@ class DetailPage extends StatelessWidget {
                   const Text('BS Software Engineering (5th Sem)', style: TextStyle(fontSize: 16, color: AppColors.primary, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 8),
                   const Text('Riphah International University', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
+                  const SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back_rounded),
+                    label: const Text('Back to Profile'),
+                  ),
                 ],
               ),
             ),

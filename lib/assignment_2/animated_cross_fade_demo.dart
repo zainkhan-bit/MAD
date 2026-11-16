@@ -28,6 +28,11 @@ class _AnimatedCrossFadeWidgetDemoState
         title: const Text('Animated CrossFade - Zain Khan'),
         backgroundColor: AppColors.peach,
         elevation: 0,
+        leading: IconButton(
+          tooltip: 'Back',
+          icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(

@@ -6,15 +6,7 @@ class NavigatorDemoApp extends StatelessWidget {
   const NavigatorDemoApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: AppColors.background,
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-        ),
-        home: const NavigatorHomePage(),
-      );
+  Widget build(BuildContext context) => const NavigatorHomePage();
 }
 
 class NavigatorHomePage extends StatelessWidget {
@@ -26,6 +18,11 @@ class NavigatorHomePage extends StatelessWidget {
           title: const Text('Navigator Demo'),
           backgroundColor: AppColors.peach,
           elevation: 0,
+          leading: IconButton(
+            tooltip: 'Back',
+            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: Center(
           child: Padding(
@@ -84,6 +81,11 @@ class AboutPage extends StatelessWidget {
           title: const Text('About Zain Khan'),
           backgroundColor: AppColors.peach,
           elevation: 0,
+          leading: IconButton(
+            tooltip: 'Back',
+            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
         body: Center(
           child: Padding(
@@ -110,7 +112,7 @@ class AboutPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back_rounded),
                     label: const Text('Go Back'),
                   ),
                 ],
