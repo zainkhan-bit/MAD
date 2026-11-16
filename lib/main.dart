@@ -5,6 +5,7 @@ import 'animated_cross_fade_widget.dart';
 import 'animated_opacity_widget.dart';
 import 'app_theme.dart';
 import 'contact_widget.dart';
+import 'courses_widget.dart';
 import 'mobile_frame.dart';
 
 void main() {
@@ -484,7 +485,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // Week 11: Bottom Navigation -> 0 = Personal, 1 = About, 2 = Contact
+  // Bottom Navigation -> 0 = Personal, 1 = About, 2 = Courses (Week 12), 3 = Contact
   int _currentIndex = 0;
 
   void _onTabTapped(int index) {
@@ -539,6 +540,12 @@ class _ProfilePageState extends State<ProfilePage> {
         return AnimatedCrossFadeWidget(
           summary: s.aboutSummary,
           full: s.aboutFull,
+        );
+      case 2:
+        // Week 12: GridView / ListView + Hero detail page
+        return CoursesWidget(
+          courses: semesterCourses,
+          heroPrefix: s.sapId,
         );
       default:
         return ContactWidget(
@@ -652,6 +659,12 @@ class _ProfilePageState extends State<ProfilePage> {
               activeIcon: Icon(Icons.auto_stories_rounded),
               label: 'About',
               tooltip: 'About Me',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu_book_outlined),
+              activeIcon: Icon(Icons.menu_book_rounded),
+              label: 'Courses',
+              tooltip: 'My Courses',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.contact_phone_outlined),
