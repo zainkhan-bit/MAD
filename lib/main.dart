@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// --- AAPKE PURANE IMPORTS ---
 import 'animated_container_widget.dart';
 import 'animated_cross_fade_widget.dart';
 import 'animated_opacity_widget.dart';
@@ -7,6 +8,18 @@ import 'app_theme.dart';
 import 'contact_widget.dart';
 import 'courses_widget.dart';
 import 'mobile_frame.dart';
+
+// --- NAYE IMPORTS (Assignment 2 ke liye) ---
+// Note: Jab aap ye files banayein ge (lib/assignment_2/ ke andar), tab ye imports
+// bilkul theek kaam karenge. Agar aapki files ka naam thora different ho to yahan
+// import ka path update kar lein.
+import 'assignment_2/navigator_demo.dart';
+import 'assignment_2/named_routes_demo.dart';
+import 'assignment_2/hero_animation_demo.dart';
+import 'assignment_2/tabs_demo.dart';
+import 'assignment_2/drawer_demo.dart';
+import 'assignment_2/animated_container_demo.dart';
+import 'assignment_2/animated_cross_fade_demo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,9 +77,9 @@ final List<Student> mockStudents = [
     program: 'BS Software Engineering',
     semester: '5th Semester',
     aboutSummary:
-        'I am a passionate Software Engineering student at Riphah International University (5th Semester). Specializing in Mobile App Development using Flutter...',
+    'I am a passionate Software Engineering student at Riphah International University (5th Semester). Specializing in Mobile App Development using Flutter...',
     aboutFull:
-        'I am a passionate Software Engineering student at Riphah International University (5th Semester). I specialize in Mobile App Development using Flutter, Database Management Systems, Programming Fundamentals (PF), and Website Development. I enjoy creating clean, efficient, and user-friendly applications that deliver great user experiences.',
+    'I am a passionate Software Engineering student at Riphah International University (5th Semester). I specialize in Mobile App Development using Flutter, Database Management Systems, Programming Fundamentals (PF), and Website Development. I enjoy creating clean, efficient, and user-friendly applications that deliver great user experiences.',
     avatarPath: 'assets/profile.jpg',
     phone: '+92 300 0000000',
     linkedin: 'linkedin.com/in/muhammad-zain-khan-251b58337',
@@ -82,9 +95,9 @@ final List<Student> mockStudents = [
     program: 'BS Software Engineering',
     semester: '5th Semester',
     aboutSummary:
-        'I am a dedicated Software Engineering student at Riphah International University (5th Semester). Specializing in Mobile App Development...',
+    'I am a dedicated Software Engineering student at Riphah International University (5th Semester). Specializing in Mobile App Development...',
     aboutFull:
-        'I am a dedicated Software Engineering student at Riphah International University (5th Semester). I specialize in Mobile App Development using Flutter, UI/UX Design, Cross-Platform Architecture, and Cloud Systems. I enjoy working on innovative software solutions.',
+    'I am a dedicated Software Engineering student at Riphah International University (5th Semester). I specialize in Mobile App Development using Flutter, UI/UX Design, Cross-Platform Architecture, and Cloud Systems. I enjoy working on innovative software solutions.',
     avatarPath: 'assets/student2.jpg',
     phone: '+92 300 1111111',
     linkedin: 'linkedin.com/in/sameer-abdullah-0807bb37b',
@@ -355,7 +368,7 @@ class _LoginPageState extends State<LoginPage> {
                                           color: AppColors.textSecondary,
                                         ),
                                         onPressed: () => setState(
-                                          () => _obscurePassword = !_obscurePassword,
+                                              () => _obscurePassword = !_obscurePassword,
                                         ),
                                       ),
                                     ),
@@ -385,23 +398,23 @@ class _LoginPageState extends State<LoginPage> {
                                         duration: const Duration(milliseconds: 250),
                                         child: _isLoading
                                             ? const SizedBox(
-                                                key: ValueKey('loading'),
-                                                width: 22,
-                                                height: 22,
-                                                child: CircularProgressIndicator(
-                                                  strokeWidth: 2.6,
-                                                  color: Colors.white,
-                                                ),
-                                              )
+                                          key: ValueKey('loading'),
+                                          width: 22,
+                                          height: 22,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2.6,
+                                            color: Colors.white,
+                                          ),
+                                        )
                                             : const Row(
-                                                key: ValueKey('label'),
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text('Login'),
-                                                  SizedBox(width: 8),
-                                                  Icon(Icons.arrow_forward_rounded, size: 20),
-                                                ],
-                                              ),
+                                          key: ValueKey('label'),
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text('Login'),
+                                            SizedBox(width: 8),
+                                            Icon(Icons.arrow_forward_rounded, size: 20),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -528,7 +541,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildTab(Student s) {
     switch (_currentIndex) {
       case 0:
-        // AnimatedOpacity (Hide / Show)
+      // AnimatedOpacity (Hide / Show)
         return AnimatedOpacityWidget(
           email: s.email,
           university: s.university,
@@ -536,13 +549,13 @@ class _ProfilePageState extends State<ProfilePage> {
           semester: s.semester,
         );
       case 1:
-        // AnimatedCrossFade (Read more / Show less)
+      // AnimatedCrossFade (Read more / Show less)
         return AnimatedCrossFadeWidget(
           summary: s.aboutSummary,
           full: s.aboutFull,
         );
       case 2:
-        // Week 12: GridView / ListView + Hero detail page
+      // Week 12: GridView / ListView + Hero detail page
         return CoursesWidget(
           courses: semesterCourses,
           heroPrefix: s.sapId,
@@ -578,7 +591,20 @@ class _ProfilePageState extends State<ProfilePage> {
             fontSize: 16,
           ),
         ),
+        // =========================================================
+        // YAHAN NAYA BUTTON ADD KIYA GAYA HAI (Assignment 2 ke liye)
+        // =========================================================
         actions: [
+          IconButton(
+            tooltip: 'Assignment 2 Programs',
+            icon: const Icon(Icons.assignment_rounded, color: AppColors.textPrimary),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AssignmentMenuPage()),
+              );
+            },
+          ),
           IconButton(
             tooltip: 'Log out',
             icon: const Icon(Icons.logout_rounded, color: AppColors.textPrimary),
@@ -674,6 +700,97 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// =====================================================================
+// NAYA PAGE: ASSIGNMENT 2 MENU
+// (Ye page sirf Assignment 2 ke programs ko show karne ke liye hai)
+// =====================================================================
+class AssignmentMenuPage extends StatelessWidget {
+  const AssignmentMenuPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Assignment 2: Navigation & Animations'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: [
+          const Text(
+            'Navigation Programs',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
+          ),
+          const SizedBox(height: 8),
+          _buildMenuCard(
+              context,
+              '1. Navigator (Move Between Screens)',
+              Icons.navigation,
+                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NavigatorDemoApp()))
+          ),
+          _buildMenuCard(
+              context,
+              '2. Named Routes',
+              Icons.route,
+                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NamedRoutesApp()))
+          ),
+          _buildMenuCard(
+              context,
+              '3. Hero Animation',
+              Icons.animation,
+                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HeroAnimationApp()))
+          ),
+          _buildMenuCard(
+              context,
+              '6. TabBar & TabBarView',
+              Icons.tab,
+                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TabsDemoApp()))
+          ),
+          _buildMenuCard(
+              context,
+              '7. Drawer & ListView',
+              Icons.menu,
+                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DrawerDemoApp()))
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Animation Programs',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.purple),
+          ),
+          const SizedBox(height: 8),
+          _buildMenuCard(
+              context,
+              '8. Animated Container',
+              Icons.animation,
+                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AnimatedContainerWidgetDemo()))
+          ),
+          _buildMenuCard(
+              context,
+              '9. Animated CrossFade',
+              Icons.animation,
+                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AnimatedCrossFadeWidgetDemo()))
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Helper widget to create consistent menu cards
+  Widget _buildMenuCard(BuildContext context, String title, IconData icon, VoidCallback onTap) {
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: ListTile(
+        leading: Icon(icon, color: AppColors.primary),
+        title: Text(title),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: onTap,
       ),
     );
   }
