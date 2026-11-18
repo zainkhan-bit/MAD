@@ -1,14 +1,15 @@
 // Generates phone screenshots of Assignment 2 into test/screenshots/
 //
-//   flutter test test/assignment2_screenshots_test.dart --update-goldens
+//   flutter test test/assignment2_screenshots_test.dart
 //
 // It also checks the full flow works:
 // Splash (3 sec) -> Home -> Drawer -> List -> Detail -> back -> About -> Grid -> Detail.
 
 import 'dart:io';
-import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mad/assignment_2/a2_data.dart';
@@ -75,11 +76,18 @@ Future<void> _loadFonts() async {
   }
 }
 
-Future<void> _capture(String name) async {
-  await expectLater(
-    find.byKey(_shotKey),
-    matchesGoldenFile('screenshots/$name.png'),
-  );
+/// Saves the current screen as a 1170 x 2532 PNG in test/screenshots/
+Future<void> _capture(WidgetTester tester, String name) async {
+  final boundary =
+      tester.renderObject<RenderRepaintBoundary>(find.byKey(_shotKey));
+  await tester.runAsync(() async {
+    final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+    final ByteData? data =
+        await image.toByteData(format: ui.ImageByteFormat.png);
+    final file = File('test/screenshots/$name.png');
+    file.parent.createSync(recursive: true);
+    file.writeAsBytesSync(data!.buffer.asUint8List());
+  });
 }
 
 void main() {
@@ -105,29 +113,29 @@ void main() {
 
     // 1. Splash (logo animation finished)
     await tester.pump(const Duration(milliseconds: 1700));
-    await _capture('01_splash');
+    await _capture(tester, '01_splash');
 
     // After 3 seconds Home opens automatically
     await tester.pump(const Duration(milliseconds: 1500));
     await tester.pumpAndSettle();
     expect(find.byType(HomeScreen), findsOneWidget);
-    await _capture('02_home');
+    await _capture(tester, '02_home');
 
     // 2. Drawer menu
     await tester.tap(find.byTooltip('Open menu'));
     await tester.pumpAndSettle();
-    await _capture('03_drawer');
+    await _capture(tester, '03_drawer');
 
     // Drawer -> List screen (Navigator.push)
     await tester.tap(find.text('Cities List'));
     await tester.pumpAndSettle();
     expect(find.byType(ListScreen), findsOneWidget);
-    await _capture('04_list');
+    await _capture(tester, '04_list');
 
     // List item -> Detail (Hero)
     await tester.tap(find.text('Islamabad'));
     await tester.pumpAndSettle();
-    await _capture('05_city_detail');
+    await _capture(tester, '05_city_detail');
 
     // Back (Navigator.pop)
     await tester.tap(find.byTooltip('Back'));
@@ -137,7 +145,7 @@ void main() {
     // Scroll the ListView
     await tester.drag(find.byType(ListView), const Offset(0, -600));
     await tester.pumpAndSettle();
-    await _capture('06_list_scrolled');
+    await _capture(tester, '06_list_scrolled');
 
     // Drawer -> About
     await tester.tap(find.byTooltip('Open menu'));
@@ -145,17 +153,17 @@ void main() {
     await tester.tap(find.text('About Me'));
     await tester.pumpAndSettle();
     expect(find.byType(AboutScreen), findsOneWidget);
-    await _capture('07_about');
+    await _capture(tester, '07_about');
 
     // Scroll: SliverAppBar collapses, GridView shows
     await tester.drag(find.byType(CustomScrollView), const Offset(0, -420));
     await tester.pumpAndSettle();
-    await _capture('08_about_grid');
+    await _capture(tester, '08_about_grid');
 
     // Grid item -> Detail (Hero)
     await tester.tap(find.text('Flutter'));
     await tester.pumpAndSettle();
-    await _capture('09_skill_detail');
+    await _capture(tester, '09_skill_detail');
 
     // Back to About, then back to Home
     await tester.tap(find.byTooltip('Back'));
