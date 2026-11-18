@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// --- AAPKE PURANE IMPORTS ---
 import 'animated_container_widget.dart';
 import 'animated_cross_fade_widget.dart';
 import 'animated_opacity_widget.dart';
@@ -9,17 +8,8 @@ import 'contact_widget.dart';
 import 'courses_widget.dart';
 import 'mobile_frame.dart';
 
-// --- NAYE IMPORTS (Assignment 2 ke liye) ---
-// Note: Jab aap ye files banayein ge (lib/assignment_2/ ke andar), tab ye imports
-// bilkul theek kaam karenge. Agar aapki files ka naam thora different ho to yahan
-// import ka path update kar lein.
-import 'assignment_2/navigator_demo.dart';
-import 'assignment_2/named_routes_demo.dart';
-import 'assignment_2/hero_animation_demo.dart';
-import 'assignment_2/tabs_demo.dart';
-import 'assignment_2/drawer_demo.dart';
-import 'assignment_2/animated_container_demo.dart';
-import 'assignment_2/animated_cross_fade_demo.dart';
+// Week 13: Assignment 2 (Splash -> Home / List / About)
+import 'assignment_2/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -591,17 +581,15 @@ class _ProfilePageState extends State<ProfilePage> {
             fontSize: 16,
           ),
         ),
-        // =========================================================
-        // YAHAN NAYA BUTTON ADD KIYA GAYA HAI (Assignment 2 ke liye)
-        // =========================================================
         actions: [
+          // Week 13: opens Assignment 2 (starts from its Splash Screen)
           IconButton(
-            tooltip: 'Assignment 2 Programs',
-            icon: const Icon(Icons.assignment_rounded, color: AppColors.textPrimary),
+            tooltip: 'Assignment 2',
+            icon: const Icon(Icons.rocket_launch_rounded, color: AppColors.textPrimary),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AssignmentMenuPage()),
+                MaterialPageRoute(builder: (context) => const SplashScreen()),
               );
             },
           ),
@@ -700,97 +688,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// =====================================================================
-// NAYA PAGE: ASSIGNMENT 2 MENU
-// (Ye page sirf Assignment 2 ke programs ko show karne ke liye hai)
-// =====================================================================
-class AssignmentMenuPage extends StatelessWidget {
-  const AssignmentMenuPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Assignment 2: Navigation & Animations'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          const Text(
-            'Navigation Programs',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
-          ),
-          const SizedBox(height: 8),
-          _buildMenuCard(
-              context,
-              '1. Navigator (Move Between Screens)',
-              Icons.navigation,
-                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NavigatorDemoApp()))
-          ),
-          _buildMenuCard(
-              context,
-              '2. Named Routes',
-              Icons.route,
-                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const NamedRoutesApp()))
-          ),
-          _buildMenuCard(
-              context,
-              '3. Hero Animation',
-              Icons.animation,
-                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HeroAnimationApp()))
-          ),
-          _buildMenuCard(
-              context,
-              '6. TabBar & TabBarView',
-              Icons.tab,
-                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TabsDemoApp()))
-          ),
-          _buildMenuCard(
-              context,
-              '7. Drawer & ListView',
-              Icons.menu,
-                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DrawerDemoApp()))
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            'Animation Programs',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.purple),
-          ),
-          const SizedBox(height: 8),
-          _buildMenuCard(
-              context,
-              '8. Animated Container',
-              Icons.animation,
-                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AnimatedContainerWidgetDemo()))
-          ),
-          _buildMenuCard(
-              context,
-              '9. Animated CrossFade',
-              Icons.animation,
-                  () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AnimatedCrossFadeWidgetDemo()))
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Helper widget to create consistent menu cards
-  Widget _buildMenuCard(BuildContext context, String title, IconData icon, VoidCallback onTap) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: ListTile(
-        leading: Icon(icon, color: AppColors.primary),
-        title: Text(title),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-        onTap: onTap,
       ),
     );
   }
